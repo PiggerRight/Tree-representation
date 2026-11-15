@@ -1,0 +1,10 @@
+target/
+*.class
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
