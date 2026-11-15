@@ -1,3 +1,5 @@
+package treevisualizer.model.tree;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -14,7 +16,7 @@ public class Node
         this.value =value;
         this.parent = null;
         this.Children = new ArrayList<>();
-        this.root = null;
+        this.root = this;
 
     }
 
@@ -51,28 +53,32 @@ public class Node
 
     }
 
-    public boolean setRoot(Node newRoot)
+    public Node getRoot()
     {
-        if (this.root == newRoot)
-        {
-            return false;
-        }
+        return root;
+    }
 
+    private void updateRoot(Node newRoot)
+    {
         this.root = newRoot;
-        return true;
+
+        for (Node child : Children)
+        {
+            child.updateRoot(newRoot);
+        }
     }
     
     public boolean addChild(Node child)
     {
-        if (child == null || child.parent != null || child.root != null)
+        if (child == null || child.parent != null || child == this.root)
         {
             return false;
         }
 
 
-        child.setRoot(this.root);
         Children.add(child);
         child.parent = this;
+        child.updateRoot(this.root);
         return true;
     }
 
@@ -85,6 +91,7 @@ public class Node
 
         child.parent = null;
         Children.remove(child);
+        child.updateRoot(child);
         return true;
     }
 

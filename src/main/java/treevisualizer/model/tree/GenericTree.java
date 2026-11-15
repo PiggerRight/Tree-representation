@@ -1,4 +1,5 @@
-import Node.java;
+package treevisualizer.model.tree;
+
 import java.util.Queue;
 import java.util.LinkedList;
 
@@ -14,31 +15,35 @@ public class GenericTree
 
     public boolean insertNode(Node parent, Node child)
     {
-        if ( parent == null || child == null || child.root == parent.root )
+        if ( parent == null || child == null || parent.getRoot() != this.root )
         {
             return false;
         } 
 
-        parent.addChild(child);
-        return true;
+        return parent.addChild(child);
     }
 
     public boolean deleteNode(Node node)
     {
-        if (node == null || node.root != this.root )
+        if (node == null || node.getRoot() != this.root )
         {
             return false;
         }
 
+        if (node == this.root)
+        {
+            this.root = null;
+            return true;
+        }
+
         Node parent = node.getparent();
-        parent.removeChild(node);
-        return true;
+        return parent.removeChild(node);
 
     }
 
     public boolean updateNodeValue(Node node, int newValue)
     {
-        if (node == null || node.root != this.root )
+        if (node == null || node.getRoot() != this.root )
         {
             return false;
         }
