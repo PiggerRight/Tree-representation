@@ -42,12 +42,19 @@ public class Node
             return false;
         }
 
-        if (newParent == null) 
-        {
-            return this.parent.removeChild(this);
+        for (Node ancestor = newParent; ancestor != null; ancestor = ancestor.parent){
+            if (ancestor == this){
+                return false;
+            }
         }
-
-        return newParent.addChild(this);
+        if (this.parent != null && !this.parent.children.remove(this)) {
+            return false;
+        }
+        this.parent = newParent;
+        if (newParent != null){
+            newParent.children.add(this);
+        }
+        return true;
     }
 
     public Node getRoot(){
@@ -77,6 +84,12 @@ public class Node
             return false;
         }
 
+        for(Node grandChild : child.getChildren()){
+            grandChild.parent = this;
+            this.children.add(grandChild);
+        }
+
+        child.children.clear();
         child.parent = null;
         children.remove(child);
         return true;
