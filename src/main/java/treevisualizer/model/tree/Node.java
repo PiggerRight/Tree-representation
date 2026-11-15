@@ -1,21 +1,21 @@
+package treevisualizer.model.tree;
+
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 
 
 public class Node
 {
     private int value;
     private Node parent;
-    private List<Node> Children;
-    private Node root;
+    private List<Node> children;
 
     public Node(int value)
     {
         this.value =value;
         this.parent = null;
-        this.Children = new ArrayList<>();
-        this.root = null;
-
+        this.children = new ArrayList<>();
     }
 
     public int getValue()
@@ -30,7 +30,7 @@ public class Node
 
     }
 
-    public Node getparent()
+    public Node getParent()
     {
         return parent;
     }
@@ -48,50 +48,42 @@ public class Node
         }
 
         return newParent.addChild(this);
-
     }
 
-    public boolean setRoot(Node newRoot)
-    {
-        if (this.root == newRoot)
-        {
-            return false;
+    public Node getRoot(){
+        Node current = this;
+        while (current.getParent() != null) {
+            current = current.getParent();
         }
-
-        this.root = newRoot;
-        return true;
+        return current;
     }
     
     public boolean addChild(Node child)
     {
-        if (child == null || child.parent != null || child.root != null)
+        if (child == null || child.getParent() != null || child.getRoot() == this.getRoot())
         {
             return false;
         }
 
-
-        child.setRoot(this.root);
-        Children.add(child);
+        children.add(child);
         child.parent = this;
         return true;
     }
 
     public boolean removeChild(Node child)
     {
-        if (child == null || child.parent != this || !Children.contains(child))
+        if (child == null || child.getParent() != this || !children.contains(child))
         {
             return false;
         }
 
         child.parent = null;
-        Children.remove(child);
+        children.remove(child);
         return true;
     }
 
     public List<Node> getChildren()
     {
-        return Children;
+        return Collections.unmodifiableList(children);
     }
-
-
 }
