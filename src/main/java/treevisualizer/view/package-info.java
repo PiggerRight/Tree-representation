@@ -1,2 +1,2 @@
-/** Các lớp vẽ cây và thành phần giao diện tự viết (giai đoạn 6). File .fxml nằm trong src/main/resources/treevisualizer/view. */
+/** Các lớp giao diện và vẽ cây. */
 package treevisualizer.view;

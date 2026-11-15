@@ -5,7 +5,7 @@
       "type": "java",
       "name": "Tree Visualizer",
       "request": "launch",
-      "mainClass": "treevisualizer.Launcher",
+      "mainClass": "treevisualizer.Main",
       "projectName": "tree-visualizer"
     }
   ]
